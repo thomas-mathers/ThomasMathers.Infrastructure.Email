@@ -3,6 +3,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <RepositoryUrl>https://github.com/thomas-mathers/ThomasMathers.Infrastructure.Email</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Email;SendGrid</PackageTags>
+        <PackageProjectUrl>https://github.com/thomas-mathers/ThomasMathers.Infrastructure.Email</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
