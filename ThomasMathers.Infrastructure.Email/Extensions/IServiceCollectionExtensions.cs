@@ -20,7 +20,7 @@ namespace ThomasMathers.Infrastructure.Email.Extensions
 
         public static void AddEmailService(this IServiceCollection serviceCollection, EmailSettings emailSettings)
         {
-            serviceCollection.AddScoped<ISendGridClient>(s => new SendGridClient(emailSettings.SendGridApiKey));
+            serviceCollection.AddScoped<ISendGridClient>(_ => new SendGridClient(emailSettings.SendGridApiKey));
             serviceCollection.AddScoped<IEmailService, SendGridEmailService>();
         }
     }

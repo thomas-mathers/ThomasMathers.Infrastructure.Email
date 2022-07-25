@@ -2,8 +2,8 @@
 {
     public record EmailAddress
     {
-        public string Email { get; init; }
-        public string Name { get; init; }
+        public string Email { get; init; } = string.Empty;
+        public string Name { get; init; } = string.Empty;
 
         public EmailAddress()
         {
