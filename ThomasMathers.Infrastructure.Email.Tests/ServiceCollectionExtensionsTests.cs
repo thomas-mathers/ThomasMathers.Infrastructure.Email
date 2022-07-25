@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ThomasMathers.Infrastructure.Email.Tests
 {
-    public class IServiceCollectionExtensionsTests
+    public class ServiceCollectionExtensionsTests
     {
         [Fact]
         public void AddEmailService_RegistersRequiredServices()

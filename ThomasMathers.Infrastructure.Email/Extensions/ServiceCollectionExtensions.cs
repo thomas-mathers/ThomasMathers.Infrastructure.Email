@@ -6,7 +6,7 @@ using ThomasMathers.Infrastructure.Email.Settings;
 
 namespace ThomasMathers.Infrastructure.Email.Extensions
 {
-    public static class IServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddEmailService(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
