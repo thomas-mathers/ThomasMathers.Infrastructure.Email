@@ -14,7 +14,7 @@ namespace ThomasMathers.Infrastructure.Email.Tests
         {
             // Arrange
             var services = new ServiceCollection();
-            var emailSettings = new EmailSettings("694127cc-c29a-44d3-9e6b-e1477efce59a");
+            var emailSettings = new EmailServiceSettings("694127cc-c29a-44d3-9e6b-e1477efce59a");
 
             // Act
             services.AddEmailService(emailSettings);

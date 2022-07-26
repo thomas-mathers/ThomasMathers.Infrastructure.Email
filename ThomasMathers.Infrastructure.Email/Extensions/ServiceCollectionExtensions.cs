@@ -10,17 +10,17 @@ namespace ThomasMathers.Infrastructure.Email.Extensions
     {
         public static void AddEmailService(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            serviceCollection.AddEmailService(configuration.GetSection("EmailSettings"));
+            serviceCollection.AddEmailService(configuration.GetSection("EmailServiceSettings"));
         }
 
         public static void AddEmailService(this IServiceCollection serviceCollection, IConfigurationSection configurationSection)
         {
-            serviceCollection.AddEmailService(EmailSettings.FromConfigurationSection(configurationSection));
+            serviceCollection.AddEmailService(EmailServiceSettings.FromConfigurationSection(configurationSection));
         }
 
-        public static void AddEmailService(this IServiceCollection serviceCollection, EmailSettings emailSettings)
+        public static void AddEmailService(this IServiceCollection serviceCollection, EmailServiceSettings emailServiceSettings)
         {
-            serviceCollection.AddScoped<ISendGridClient>(_ => new SendGridClient(emailSettings.SendGridApiKey));
+            serviceCollection.AddScoped<ISendGridClient>(_ => new SendGridClient(emailServiceSettings.SendGridApiKey));
             serviceCollection.AddScoped<IEmailService, SendGridEmailService>();
         }
     }
