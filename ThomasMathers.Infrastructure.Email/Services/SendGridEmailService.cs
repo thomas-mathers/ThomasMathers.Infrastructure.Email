@@ -1,4 +1,6 @@
-﻿using SendGrid;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using SendGrid;
 using ThomasMathers.Infrastructure.Email.Mappers;
 
 namespace ThomasMathers.Infrastructure.Email.Services
@@ -6,20 +8,28 @@ namespace ThomasMathers.Infrastructure.Email.Services
     public class SendGridEmailService : IEmailService
     {
         private readonly ISendGridClient _sendGridClient;
+        private readonly ILogger<SendGridEmailService> _logger;
 
-        public SendGridEmailService(ISendGridClient sendGridClient)
+        public SendGridEmailService(ISendGridClient sendGridClient, ILogger<SendGridEmailService> logger)
         {
             _sendGridClient = sendGridClient;
+            _logger = logger;
         }
 
         public Task SendEmailAsync(EmailMessage email)
         {
-            return _sendGridClient.SendEmailAsync(EmailMessageMapper.Map(email));
+            var sendGridEmail = EmailMessageMapper.Map(email);
+            var sendGridEmailJson = JsonSerializer.Serialize(sendGridEmail);
+            _logger.LogInformation($"Sending email: {sendGridEmailJson}");
+            return _sendGridClient.SendEmailAsync(sendGridEmail);
         }
 
         public Task SendTemplatedEmailAsync<T>(TemplateEmailMessage<T> email) where T : class
         {
-            return _sendGridClient.SendEmailAsync(TemplateEmailMessageMapper.Map(email));
+            var sendGridEmail = TemplateEmailMessageMapper.Map(email);
+            var sendGridEmailJson = JsonSerializer.Serialize(sendGridEmail);
+            _logger.LogInformation($"Sending email: {sendGridEmailJson}");
+            return _sendGridClient.SendEmailAsync(sendGridEmail);
         }
     }
 }

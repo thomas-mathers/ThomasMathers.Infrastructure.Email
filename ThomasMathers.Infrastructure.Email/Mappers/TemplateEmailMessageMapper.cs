@@ -13,8 +13,7 @@ namespace ThomasMathers.Infrastructure.Email.Mappers
 
             var message = new SendGridMessage
             {
-                From = EmailAddressMapper.Map(emailMessage.From),
-                Subject = emailMessage.Subject
+                From = EmailAddressMapper.Map(emailMessage.From)
             };
 
             message.AddTo(EmailAddressMapper.Map(emailMessage.To));
