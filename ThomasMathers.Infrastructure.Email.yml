@@ -1,0 +1,43 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+steps:
+- task: gitversion/setup@0
+  displayName: 'GitVersion setup'
+  inputs:
+    versionSpec: '5.x'
+- task: gitversion/execute@0
+  displayName: 'GitVersion execute'
+  inputs:
+    useConfigFile: true
+    configFilePath: 'gitversion.yml'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'ThomasMathers.Infrastructure.Email/ThomasMathers.Infrastructure.Email.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'ThomasMathers.Infrastructure.Email.Tests/ThomasMathers.Infrastructure.Email.Tests.csproj'
+- task: NuGetCommand@2
+  displayName: 'NuGet pack'
+  inputs:
+    command: 'pack'
+    packagesToPack: 'ThomasMathers.Infrastructure.Email/ThomasMathers.Infrastructure.Email.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'GitVersion.NuGetVersion'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
